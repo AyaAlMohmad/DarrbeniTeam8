@@ -18,7 +18,14 @@ class SliderController extends Controller
     public function index()
     {
         $sliders = Slider::all();
-        $data = SliderResource::collection($sliders);
+        $data =[];
+        foreach($sliders as $slider){
+            $imagePath = $this->getCollageImagePath($slider->image);
+            $data[]=[
+                'link' => $slider->link,
+                'image' => $imagePath
+            ];
+        }
 
         return $this->indexResponse($data);
     }
