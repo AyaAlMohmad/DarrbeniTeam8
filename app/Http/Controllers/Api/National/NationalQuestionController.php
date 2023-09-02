@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\NationalQuestion;
 use App\Models\Spacialization;
 use App\Traits\ApiResponseTrait;
+use App\Traits\BankQTrait;
 use App\Traits\NationalAQTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 class NationalQuestionController extends Controller
 {
     use ApiResponseTrait;
-    use NationalAQTrait;
+    use BankQTrait;
 
     public function index()
     {
