@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('username');
             $table->integer('phone')->unique();  
-            $table->foreignId('collage_id')->constrained('collages')->cascadeOnDelete();
+            // $table->foreignId('collage_id')->constrained('collages')->cascadeOnDelete();
             
             $table->rememberToken();
             $table->timestamps();

@@ -31,7 +31,7 @@
                 <tbody>
                     <tr>
 
-                        <td><img style="width: 90px; height: 90px;" src="{{ URL::to('/') }}/storage/Collage/{{ $data->image }}"></td>
+                        <td><img style="width: 90px; height: 90px;" src="{{ URL::to('/') }}/{{ str_replace('public', 'storage', $data->image) }}"></td>
                         <td>{{ $Collage->uuid }}</td>
                         <td>{{ $Collage->name }}</td>
                         <td>{{ $Collage->category->name}}</td>

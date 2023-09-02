@@ -9,11 +9,13 @@ use App\Models\CourseQuestion;
 use App\Models\NationalAnswer;
 use App\Models\NationalQuestion;
 use App\Traits\ApiResponseTrait;
+use App\Traits\ScoreTrait;
 use Illuminate\Http\Request;
 
 class ScoreController extends Controller
 {
     use ApiResponseTrait;
+    use ScoreTrait;
    
     public function show(Request $request)
     {
@@ -21,14 +23,13 @@ class ScoreController extends Controller
         $correctAnswers = 0;
         $wrongAnswers =[];
         foreach($request->data as $data){
-            $question = $this->getQuestionByUuid($data['question'],$data['question']);
+            $question = $this->getQuestionByUuid($data['question']);
 
             if(!$question){
                 return $this->notfoundResponse("Not Found Question");
             }
             
-            $answer = CourseAnswer::where('uuid',$data['answer'])->first()
-              ?? NationalAnswer::where('uuid',$data['answer'])->first();
+            $answer =$this->getAnswerByUuid($data['answer']);
             
             if(!$answer){
                 return $this->notfoundResponse("Not Found answer");
@@ -38,19 +39,17 @@ class ScoreController extends Controller
             $answer_id =$answer->id;
             
             
-            $check = NationalAnswer::where('uuid',$answer_uuid)->first()
-                ??  CourseAnswerQuestion::where('course_answer_id',$answer_id)->first();
+            $check = $this->getCheckAnswer($answer_uuid,$answer_id);
 
             if($check->status == 1){
                 $correctAnswers++ ;
             }else{
-                $get_correct = $this->getQuestionByUuid($question_uuid,$question_uuid);
+                $get_correct = $this->getQuestionByUuid($question_uuid);
 
                 foreach($get_correct->answers as $corr_ans){
                     $status = $corr_ans->status ?? $corr_ans->pivot->status ?? 0;
                     if ($status === 1) {
                         $wrongAnswers[] = [
-                            
                             'question' => $question->uuid,
                             'correct_answer' => $corr_ans->uuid,
                             'reference' => optional($question->reference)->reference,
@@ -63,26 +62,14 @@ class ScoreController extends Controller
         $all[]=[
             'count' => $count,
             'score' => $correctAnswers,
-            'avg'=> (($correctAnswers*100)/$count).'%',
+            'avg' => number_format(($correctAnswers * 100) / $count, 2) . '%',
             'wronge_Answers' => $wrongAnswers
         ];
+        
         return $this->showResponse($all);
     }
 
-    private function getQuestionByUuid($cid,$nid)
-    {
-        return CourseQuestion::where('uuid', $cid)->first()
-            ?? NationalQuestion::where('uuid', $nid)->first();
-    }
+   
 
-    // { "data":
-    //     [
-            
-    //         {
-    //              "question":"8f64fbf0-736e-499e-9a2a-64995a6ead83",
-    //             "answer":"948bc470-a323-439a-a8b7-4789242025e9"
-    //         },
-    //       
-    //     ]
-    //     }
+    
 }

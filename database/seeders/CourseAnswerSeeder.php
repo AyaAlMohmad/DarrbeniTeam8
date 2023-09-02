@@ -17,7 +17,7 @@ class CourseAnswerSeeder  extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 400; $i++) {
             CourseAnswer::create([
                 'uuid' => Str::uuid(),
                 'answer' => 'answer' . $i,

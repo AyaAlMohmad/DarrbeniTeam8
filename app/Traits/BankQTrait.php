@@ -2,16 +2,19 @@
 
 namespace App\Traits;
 
+use Illuminate\Foundation\Mix;
+use Nette\Utils\Random;
+use Ramsey\Uuid\Generator\RandomGeneratorFactory;
 
 trait BankQTrait
 {
-    public function formatQuestionData($questions, $type)
+    public function formatQuestionData($questions)
     {
         $formattedQuestions = [];
 
         foreach ($questions as $question) {
             $questionData = [
-                'question_id' => $question->uuid,
+                'question_ids' => $question->uuid,
                 'question' => $question->question,
                 'reference' => optional($question->reference)->reference?$question->reference->reference : null,
                 'answers' => [],
@@ -30,6 +33,10 @@ trait BankQTrait
             $formattedQuestions[] = $questionData;
         }
 
+        
+        $questionAll[] = shuffle($formattedQuestions);
         return $formattedQuestions;
+
     }
+   
 }

@@ -37,11 +37,12 @@ class CourseAnswerQuestionController extends Controller
 
         $responseData = [];
 
-        foreach ($courses as $course) {
-            $questions = CourseQuestion::where('course_id', $course->id)->get();
-            $courseData = $this->formatCourseData($course, $questions);
+
+            $questions = CourseQuestion::all();
+            $randomQuestions = $questions->shuffle()->take(min(50, $questions->count()));
+            $courseData = $this->formatQuestionsWithAnswers($randomQuestions);
             $responseData[] = $courseData;
-        }
+        
 
         return $this->showResponse($responseData);
     }
@@ -54,9 +55,9 @@ class CourseAnswerQuestionController extends Controller
             return $this->notfoundResponse('Course Not Found');
         }
 
-        $questions = CourseQuestion::where('course_id', $course->id)->get();
+        $questions = CourseQuestion::all();
         $randomQuestions = $questions->shuffle()->take(min(50, $questions->count()));
-        $courseData = $this->formatCourseData($course, $randomQuestions);
+        $courseData = $this->formatQuestionsWithAnswers($randomQuestions);
         $responseData = [$courseData];
 
         return $this->showResponse($responseData);

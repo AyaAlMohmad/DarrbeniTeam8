@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:sanctum');
     }
 
     /**
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::attempt(['username' => 'admin', 'code' => '123aa12'])) {
+
+            return view('Dashboard.layout.dashboard');
+        } else {
+            return redirect()->back();
+        }
     }
 }

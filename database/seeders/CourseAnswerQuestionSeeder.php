@@ -18,24 +18,21 @@ class CourseAnswerQuestionSeeder extends Seeder
     public function run()
     {
         $questionsCount = 100;
-     
-
-
-        $questionsCount = 100;
         $answersPerQuestion = 4;
+        $answersCreated = 0;
 
         for ($question = 1; $question <= $questionsCount; $question++) {
             $statuses = [0, 0, 0, 1]; // Array of statuses, with one '1' for the correct answer
             shuffle($statuses); // Randomly shuffle the statuses array
 
-            for ($i = 1; $i <= $answersPerQuestion; $i++) {
+            for ($answerIndex = 1 ; $answerIndex <= $answersPerQuestion; $answerIndex++) {
                 CourseAnswerQuestion::create([
                     'uuid' => Str::uuid(),
                     'course_question_id' => $question,
-                    'course_answer_id' => $question ,
-                    'status' => $statuses[$i - 1] // Use the shuffled statuses array
+                    'course_answer_id' =>++$answersCreated ,
+                    'status' => $statuses[$answerIndex  - 1] // Use the shuffled statuses array
                 ]);
-            }
+            } 
         }
 
 

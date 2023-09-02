@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api\National;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NationalQuestionRequest;
 use App\Http\Resources\NationalQuestionResource;
@@ -121,14 +120,15 @@ class NationalQuestionController extends Controller
         $result = $this->formatQuestionData($questions);
         return $this->indexResponse($result);
     }
-    // *****************************************************
-    // *****************************************************
+
     // ***************show National Question****************
     public function showAll($uuid)
     {
         $specialization = Spacialization::where('uuid', $uuid)->first();
         $questions = NationalQuestion::where('spacialization_id', $specialization->id)->get();
-        $result = $this->formatQuestionData($questions);
+        $randomQuestions = $questions->shuffle()->take(min(50, $questions->count()));
+
+        $result = $this-> formatQuestionData($randomQuestions);
         return $this->indexResponse($result);
     }
     // *********show National Question with course*********
@@ -225,3 +225,4 @@ class NationalQuestionController extends Controller
 
         
 }
+

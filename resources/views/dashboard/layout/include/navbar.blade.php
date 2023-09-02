@@ -47,7 +47,7 @@
                     <span class="user-info">
                         <small>hello</small>
 
-                        {{ Auth::user()->name ?? '' }}
+                       Admin
                     </span>
 
                     <i class="ace-icon fa fa-caret-down"></i>
@@ -74,7 +74,7 @@
                         </li> --}}
                     <li>
 
-                        {{-- <div>
+                        <div>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -85,7 +85,7 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-                        </div> --}}
+                        </div>
                     </li>
 
                 </ul>

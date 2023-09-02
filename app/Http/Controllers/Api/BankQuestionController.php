@@ -32,21 +32,27 @@ class BankQuestionController extends Controller
             return $this->notfoundResponse('Courses Not Found');
         }
 
-        foreach ($courses as $course) {
-            $courseQuestions = CourseQuestion::where('course_id', $course->id)->get();
-            $nationalQuestions = NationalQuestion::where('course_id', $course->id)->get();
+        // foreach ($courses as $course) {
+            $courseQuestions = CourseQuestion::all();
+            $nationalQuestions = NationalQuestion::all();
 
-            $randomCourseQuestions = $courseQuestions->shuffle()->take(min(50, $courseQuestions->count()));
+            $randomCourseQuestions = $courseQuestions->shuffle()->take(min(50, $nationalQuestions->count()));
             $randomNationalQuestions = $nationalQuestions->shuffle()->take(min(50, $nationalQuestions->count()));
+            
 
-            $responseData = array_merge(
-                $responseData,
-                $this->formatQuestionData($randomCourseQuestions, 'course'),
-                $this->formatQuestionData($randomNationalQuestions, 'national')
-            );
-        }
+            $courseQ = $this->formatQuestionData($randomCourseQuestions);
+            $nationalQ = $this->formatQuestionData($randomNationalQuestions);
+            
 
-        return $this->showResponse($responseData);
+            $combinedQuestions = array_merge($courseQ, $nationalQ);
+            
+
+            shuffle($combinedQuestions);
+            
+            $responseData = $combinedQuestions;
+
+     
+    return $this->showResponse($responseData);
     }
 
   

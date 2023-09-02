@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Categories\CollageController;
 use App\Http\Controllers\Dashboard\Categories\CategoryController;
 use App\Http\Controllers\Dashboard\Categories\SpacializationController;
@@ -25,7 +25,12 @@ use Illuminate\Support\Facades\Route;
 |->middleware(['auth','chekUser:admin'])
 */
 
+// Route::get('/admin/dashboard', [DashController::class, 'index'])->name('admin.dashboard');
 
+Auth::routes();
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::prefix('dash/')->group(function () {
     Route::get('/', [DashController::class, 'index'])->name("dash.index");
     Route::resource('category', CategoryController::class);
@@ -84,10 +89,10 @@ Route::prefix('dash/')->group(function () {
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
