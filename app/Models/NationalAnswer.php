@@ -12,7 +12,7 @@ class NationalAnswer extends Model
     // ,HasUuids
     protected $fillable=['answer','national_question_id','status','uuid'];
 
-    public function question()
+    public function NationalQuestion()
     {
         return $this->belongsTo(NationalQuestion::class);
     }
