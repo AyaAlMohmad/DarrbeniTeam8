@@ -34,10 +34,10 @@ class SpacializationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(spacializationRequest $request)
+    public function store(SpacializationRequest $request)
     {
         //
-        $collage = Collage::where('id', $request->collage_id)->first();
+        // $collage = Collage::where('id', $request->collage_id)->first();
 
 
        
@@ -46,7 +46,7 @@ class SpacializationController extends Controller
             $specialization = Spacialization::create([
                 'uuid' => Str::uuid(),
                 'name' => $request->name,
-                'collage_id' => $collage->id
+                'collage_id' => $request->collage_id
             ]);
 
 
@@ -85,7 +85,7 @@ class SpacializationController extends Controller
     public function update(spacializationRequest $request, $uuid)
     {
 
-        $collage = Collage::where('id', $request->category_id)->first();
+        // $collage = Collage::where('id', $request->collage_id)->first();
         $specialization=Spacialization::where('uuid', $uuid)->first();
 
         
@@ -94,7 +94,7 @@ class SpacializationController extends Controller
             $specialization->update([
             
                 'name' => $request->input('name', $specialization->name) ?: $specialization->name,
-                'collage_id' => $collage->id ?: $specialization->collage_id
+                'collage_id' =>$request->collage_id ?: $specialization->collage_id
 
 
 
