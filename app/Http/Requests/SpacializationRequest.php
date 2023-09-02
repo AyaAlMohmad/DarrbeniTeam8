@@ -26,7 +26,7 @@ class SpacializationRequest extends FormRequest
         return [
             //
             'name' => 'required|string|max:255',
-          'college_id' => 'required|integer'
+          // 'college_id' => 'required|integer'
         ];
     }
 }
