@@ -40,7 +40,7 @@ class CourseController extends Controller
 
     public function store(CourseRequest $request)
     {
-        $Spacialization = Spacialization::where('id', $request->Spacialization_id)->first();
+        $Spacialization = Spacialization::where('id', $request->specialization_id)->first();
 
        
         
@@ -84,15 +84,16 @@ class CourseController extends Controller
     // **************************************************
     public function update(CourseRequest $request, $uuid)
     {
-        $specialization = Spacialization::where('name', $request->Spacialization_id)->first();
+        // $Spacialization = Spacialization::where('id', $request->specialization_id)->first();
+
         
             $course = Course::where('uuid', $uuid)->first();
            
 
 
             $course->update([
-                'name' => $request->name,
-                'spacialization_id' => $specialization->id,
+                'name' => $request->name ?: $course->name,
+                'spacialization_id' => $request->specialization_id ?: $course->spacialization_id,
             ]);
 
             if ($course) {
