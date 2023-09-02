@@ -85,18 +85,18 @@ class NationalAnswerController extends Controller
 
 
         $NationalAnswer->update([
-            'uuid' => Str::uuid(),
-            'answer' => $request->answer,
-            'national_question_id' => $request->question_id,
-            'status' => $request->status,
+            // 'uuid' => Str::uuid(),
+            'answer' => $request->answer?: $NationalAnswer->answer,
+            'national_question_id' => $request->question_id?: $NationalAnswer->national_question_id,
+            'status' => $request->status?: $NationalAnswer->status,
 
         ]);
 
         if ($NationalAnswer) {
-            return redirect()->route('nationalanswer.index')->with('national answer  Update successfully');
+            return redirect()->route('nationalAnswer.index')->with('national answer  Update successfully');
         }
 
-        return redirect()->route('nationalanswer.index')->with(' you can not  Update national answer ');
+        return redirect()->route('nationalAnswer.index')->with(' you can not  Update national answer ');
     }
 
 
