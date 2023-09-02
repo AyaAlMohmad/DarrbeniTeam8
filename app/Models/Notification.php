@@ -9,5 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Notification extends Model
 {
     use HasFactory;
+        use SoftDeletes;
+
     protected $fillable=['data'];
 }
