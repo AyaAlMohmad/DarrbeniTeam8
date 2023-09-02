@@ -99,14 +99,14 @@ class NationalQuestionController extends Controller
 
 
             $nationalquestion->update([
-                'question' => $request->question,
-                'date' => $request->date,
-                'spacialization_id' => $request->specialization_id,
-                'course_id'=>$request->course_id,
+                'question' => $request->question ?: $nationalquestion->question ,
+                'date' => $request->date ?: $nationalquestion->date,
+                'spacialization_id' => $request->specialization_id ?: $nationalquestion->spacialization_id,
+                'course_id'=>$request->course_id ?: $nationalquestion->course_id,
 
             ]);
             $nationalquestion->reference()->update([
-                'reference' => $request->reference,
+                'reference' => $request->reference ?: $nationalquestion->reference->reference,
             ]);
 
             if ($nationalquestion) {
