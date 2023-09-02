@@ -19,7 +19,7 @@
                         Answer
                     </label>
                     <div class="col-sm-4">
-                        <input class="col-xs-10 col-sm-5" type="text" answer="answer" id="answer" value="{{ $Answer->answer }}">
+                        <input class="col-xs-10 col-sm-5" type="text" name="answer" id="answer" value="{{ $Answer->answer }}">
                         @error('answer')
                             <div>{{ $message }}</div>
                         @enderror
@@ -31,7 +31,7 @@
                         <select class="col-xs-10 col-sm-5" name="status" id="status">
                             <option value="">Select a status</option>
 
-                            <option value="o">False</option>
+                            <option value="0">False</option>
                             <option value="1">True</option>
 
                         </select>
