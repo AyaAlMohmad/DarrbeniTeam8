@@ -93,22 +93,22 @@ class CourseAnswerController extends Controller
 
 
         $Answer->update([
-            'uuid' => Str::uuid(),
-            'answer' => $request->answer,
+            // 'uuid' => Str::uuid(),
+            'answer' => $request->answer ?: $Answer->answer,
 
 
         ]);
 
        
     $Answer->questions()->detach(); // Remove the existing associations
-    $Answer->questions()->attach($question, ['uuid'=>Str::uuid(),'status' => $request->status]); // Attach the new association
+    $Answer->questions()->attach($question , ['uuid'=>Str::uuid(),'status' => $request->status]); // Attach the new association
 
 
         if ($Answer) {
-            return redirect()->route('courseAnswer.index')->with("Course Answer  update successfully");
+            return redirect()->route('courseAnswers.index')->with("Course Answer  update successfully");
         }
 
-        return  redirect()->route('courseAnswer.index')->with(" Course Answer Not Found");
+        return  redirect()->route('courseAnswers.index')->with(" Course Answer Not Found");
     }
     // ************************************************
     // ************************************************
