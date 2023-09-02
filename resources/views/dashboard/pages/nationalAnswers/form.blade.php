@@ -30,7 +30,7 @@
                     <select class="col-xs-10 col-sm-5" name="status" id="status">
                         <option value="">Select a status</option>
                      
-                            <option value="o">False</option>
+                            <option value="0">False</option>
                             <option value="1">True</option>
                       
                     </select>
