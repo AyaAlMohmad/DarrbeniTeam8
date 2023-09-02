@@ -87,24 +87,25 @@ class CourseQuestionController extends Controller
     public function update(CourseQuestionRequest $request, $uuid)
     {
         $question = CourseQuestion::where('uuid',$uuid)->first();
-        $course = Course::where('name', $request->course_id)->first();
+        // $course = Course::where('name', $request->course_id)->first();
 
 
         $question->update([
-            'uuid' => Str::uuid(),
-            'name' => $request->course_name,
-            'course_id' => $course->id,
+            // 'uuid' => Str::uuid(),
+            'question' => $request->question ?: $question->name ,
+            'course_id' =>  $request->course_id ?: $question->course_id,
 
         ]);
         $question->reference()->update([
-            'reference' =>$request->reference,    
+            'reference' =>$request->reference ?: $question->reference->reference,    
         ]);
 
         if ($question) {
-            return $this->updateResponse( new CourseQuestionResource($question));
+            return redirect()->route('courseQuestion.index')->with("course Question   update successfully");
         }
 
-        return $this->errorResponse('you con not update the question ', 404);
+        return  redirect()->route('courseQuestion.index')->with(" course Question  Not Found");
+    
     }
     // ***************************************************
     // ***************************************************
